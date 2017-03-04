@@ -8,6 +8,9 @@
 require_once 'inc/Nbu.php';
 require_once 'inc/View.php';
 
+wp_register_style('nbu_currency_main_css', plugins_url('assets/css/main.css', __FILE__));
+wp_enqueue_style('nbu_currency_main_css');
+
 if (is_admin()) {
 
     add_action('admin_menu', 'nbu_currency_admin_menu');

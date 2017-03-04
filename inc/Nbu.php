@@ -56,7 +56,7 @@ class Nbu
     public function getCurrencyStatus($chosen_currency)
     {
         $currencyToday = $this->getCurrency($chosen_currency);
-        $this->_setDate(time() - (60 * 60 * 24)*3);
+        $this->_setDate(time() - (60 * 60 * 24));
 
         $currencyYesterday = $this->getCurrency($chosen_currency);
         $this->_setDate(time());

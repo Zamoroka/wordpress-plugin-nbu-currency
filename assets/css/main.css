@@ -1,0 +1,14 @@
+.nbu-currency {
+    margin-bottom: 2px !important;
+}
+.nbu-currency th {
+    border-top: 1px solid #1a1c21 !important;
+    border-bottom: 1px solid #1a1c21 !important;
+    border-left: 1px solid #1a1c21 !important;
+    background: #26292e !important;
+}
+.nbu-currency td {
+    border-top: 1px solid #1a1c21 !important;
+    border-bottom: 1px solid #1a1c21 !important;
+    border-right: 1px solid #1a1c21 !important;
+}
