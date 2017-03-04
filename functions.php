@@ -10,9 +10,12 @@ require_once 'inc/View.php';
 
 wp_register_style('nbu_currency_main_css', plugins_url('assets/css/main.css', __FILE__));
 wp_enqueue_style('nbu_currency_main_css');
+wp_register_script('nbu_currency_main_js', plugins_url('assets/js/main.js', __FILE__));
+wp_enqueue_script('nbu_currency_main_js');
 
 if (is_admin()) {
-
+    wp_register_script('nbu_currency_sortable', plugins_url('assets/Sortable/Sortable.min.js', __FILE__));
+    wp_enqueue_script('nbu_currency_sortable');
     add_action('admin_menu', 'nbu_currency_admin_menu');
 
     function nbu_currency_admin_menu()
@@ -23,33 +26,25 @@ if (is_admin()) {
 
     function nbu_currency_admin_html()
     {
-        $nbu_currency_chosen_currencies = get_option('nbu_currency_chosen_currencies');
         if ($_POST['nbu_currency_hidden'] == 'Y') {
             update_option('nbu_currency_chosen_currencies', $_POST['nbu_currency_chosen_currencies']);
         }
+        $chosen_cc = get_option('nbu_currency_chosen_currencies');
         $nbu = new Nbu();
-        ?>
-        <div>
-            <h2>Currency NBU Options</h2>
-            <form name="nbu_currency_form" method="post"
-                  action="<?php echo str_replace('%7E', '~', $_SERVER['REQUEST_URI']); ?>">
-                <input type="hidden" name="nbu_currency_hidden" value="Y">
-                <p>
-                    <label for="display"><?php _e('Display') ?></label>
-                    <select multiple="multiple" id="display" size="10" name="nbu_currency_chosen_currencies[]">
-                        <?php foreach ($nbu->getAllCurrencies() as $currency): ?>
-                            <?php $selected = in_array($currency->cc, $nbu_currency_chosen_currencies) ? 'selected="selected"' : '' ?>
-                            <option value="<?php echo $currency->cc ?>" <?php echo $selected ?>><?php echo $currency->txt ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </p>
+        $view = new View();
+        $allCurrencies = $nbu->getAllCurrencies();
+        $chosenCurrencies = array();
+        foreach ($allCurrencies as $key => $currency) {
+            if (in_array($currency->cc, $chosen_cc)) {
+                $chosenCurrencies[array_search($currency->cc, $chosen_cc)] = $currency;
+                unset($allCurrencies[$key]);
+            }
+        }
+        ksort($chosenCurrencies);
 
-                <p>
-                    <input type="submit" value="<?php _e('Save Changes') ?>"/>
-                </p>
-            </form>
-        </div>
-        <?php
+        $view->assign('allCurrencies', $allCurrencies);
+        $view->assign('chosenCurrencies', $chosenCurrencies);
+        $view->display('view/admin-form.php');
     }
 }
 

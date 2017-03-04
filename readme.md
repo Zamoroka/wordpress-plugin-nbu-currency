@@ -4,3 +4,4 @@ requirements:
 * bootstrap.css
 * font awesome
 * php 7
+* http://rubaxa.github.io/Sortable/
