@@ -10,7 +10,6 @@ require_once 'inc/View.php';
 
 wp_register_style('nbu_currency_main_css', plugins_url('assets/css/main.css', __FILE__));
 wp_enqueue_style('nbu_currency_main_css');
-wp_enqueue_script('jquery');
 wp_register_script('nbu_currency_main_js', plugins_url('assets/js/main.js', __FILE__));
 wp_enqueue_script('nbu_currency_main_js');
 
@@ -55,7 +54,6 @@ function nbu_currency_shortcode()
     $view = new View();
     $nbu = new Nbu();
     $view->assign('currencies', $nbu->getChosenCurrencies());
-    $view->assign('rateUSD', $nbu->getCurrency('USD')->rate);
     return $view->display('view/frontend-widget.php');
 }
 

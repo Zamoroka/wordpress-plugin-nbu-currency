@@ -17,15 +17,10 @@
                     $icon = '<i class="text-warning fa fa-minus" aria-hidden="true"></i>';
                     break;
             }
-            if ($currency->cc == 'XAU' || $currency->cc == 'XAG') {
-                $rate = round($currency->rate / $rateUSD, 2) . ' $';
-            } else {
-                $rate = round($currency->rate, 2) . ' ₴';
-            }
             ?>
             <tr>
                 <th class="col-md-6"><?php echo $currency->txt ?></th>
-                <td class="col-md-6"><?php echo $icon ?>&nbsp<?php echo $rate; ?></td>
+                <td class="col-md-6"><?php echo $icon ?>&nbsp<?php echo round($currency->rate, 2); ?></td>
             </tr>
         <?php endforeach; ?>
 
